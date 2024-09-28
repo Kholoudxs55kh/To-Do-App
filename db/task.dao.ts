@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { startOfDay } from "date-fns";
 import taskUpdateI from "../types.d";
 // import { addWeeks } from "date-fns";
@@ -35,7 +35,7 @@ export default class TaskDao {
     }
   }
 
-  async createTask(data: Prisma.TaskCreateInput) {
+  async createTask(data: taskCreateI) {
     await this.checkTaskNameAvailability(data.name);
     const task = await prisma.task.create({ data });
     return task;
