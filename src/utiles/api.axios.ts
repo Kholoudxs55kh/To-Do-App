@@ -16,7 +16,6 @@ const fetchTasks = async (
   try {
     const response: AxiosResponse<ApiResponse<taskI[]>> = await api.get(
       url,
-      options
     );
     const res = response.data.data;
     return res;
