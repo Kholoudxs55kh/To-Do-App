@@ -16,7 +16,7 @@ const allowedOrigins = [
 ];
 
 const corsOptions = {
-  origin: function (origin: string | undefined, callback: any) {
+  origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
@@ -24,6 +24,7 @@ const corsOptions = {
     }
   },
   methods: "GET,POST,PUT,DELETE",
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
