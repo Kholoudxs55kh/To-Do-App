@@ -13,10 +13,9 @@ const fetchTasks = async (
   url: string,
   options?: AxiosRequestConfig
 ): Promise<taskI[] | undefined> => {
+  console.log("from axios", options?.data);
   try {
-    const response: AxiosResponse<ApiResponse<taskI[]>> = await api.get(
-      url,
-    );
+    const response: AxiosResponse<ApiResponse<taskI[]>> = await api.get(url);
     const res = response.data.data;
     return res;
   } catch (error: unknown) {
