@@ -42,11 +42,7 @@ export default class TaskDao {
   }
 
   async getTasks() {
-    const tasks = await prisma.task.findMany({
-      where: {
-        isDeleted: false,
-      },
-    });
+    const tasks = await prisma.task.findMany();
     return tasks;
   }
 
@@ -72,8 +68,6 @@ export default class TaskDao {
         await this.checkTaskExist(data.name);
       }
     } catch (e: unknown) {
-      console.log("=============================== error", e);
-
       if (e instanceof Error) {
         if (e.message === "Task not found") throw new Error(e.message);
 
@@ -81,8 +75,6 @@ export default class TaskDao {
           throw new Error(e.message);
 
         if (e.message === "Task already exist") {
-          console.log(data);
-          console.log(`I am here`);
           const task = await prisma.task.update({
             where: { id: data.id },
             data,
@@ -95,8 +87,19 @@ export default class TaskDao {
     }
   }
 
-  async softDeleteAllTasks() {
-    const tasks = await prisma.task.updateMany({ data: { isDeleted: true } });
+  async softDeleteAllActiveTasks() {
+    const tasks = await prisma.task.updateMany({
+      data: { isDeleted: true },
+      where: { isDone: false },
+    });
+    return tasks;
+  }
+
+  async softDeleteAllDoneTasks() {
+    const tasks = await prisma.task.updateMany({
+      data: { isDeleted: true },
+      where: { isDone: true },
+    });
     return tasks;
   }
 
@@ -113,8 +116,7 @@ export default class TaskDao {
 
   async hardDeleteAllTasks() {
     // const period = addWeeks(new Date(), -1);
-    const period = addMinutes(new Date(), -15);
-    console.log(period);
+    const period = addMinutes(new Date(), -55);
     const tasks = await prisma.task.deleteMany({
       where: {
         isDeleted: true,
