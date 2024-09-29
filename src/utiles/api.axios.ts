@@ -6,7 +6,7 @@ interface ApiResponse<T> {
 }
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
 const fetchTasks = async (
@@ -82,6 +82,6 @@ const clearTasks = async (url: string): Promise<void> => {
       console.error("Unknown error:", error);
     }
   }
-}
+};
 
 export { fetchTasks, createTask, updateTask, clearTasks };
