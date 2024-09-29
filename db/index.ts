@@ -5,13 +5,28 @@ import dotenv from "dotenv";
 import express, { NextFunction, Request, Response } from "express";
 import taskRoutes from "./routes/task.routes";
 import { DeleteTaskIfPassesWeekDeleted } from "./middlewares/CheckTaskDeletion";
+import cron from "node-cron";
 
 export const app = express();
 
-app.use(cors({
-  origin: 'https://to-do-app-five-chi.vercel.app',
-  methods: 'GET,POST,PUT,DELETE',
-}));
+const allowedOrigins = [
+  "https://to-do-app-five-chi.vercel.app",
+  "http://localhost:3000",
+  "https://to-do-3nsa6jood-kholoudxs55khs-projects.vercel.app"
+];
+
+const corsOptions = {
+  origin: function (origin: string | undefined, callback: any) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: "GET,POST,PUT,DELETE",
+};
+
+app.use(cors(corsOptions));
 
 dotenv.config();
 
@@ -22,8 +37,14 @@ app.use(morgan("dev"));
 
 app.use("/api", taskRoutes);
 
-DeleteTaskIfPassesWeekDeleted();
-
+cron.schedule("0 0 * * *", async () => {
+  try {
+    console.log("Running scheduled task to delete old tasks...");
+    await DeleteTaskIfPassesWeekDeleted();
+  } catch (error) {
+    console.error("Error during scheduled task deletion:", error);
+  }
+});
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(createError.NotFound());
 });
