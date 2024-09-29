@@ -8,7 +8,10 @@ import { DeleteTaskIfPassesWeekDeleted } from "./middlewares/CheckTaskDeletion";
 
 export const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://to-do-app-five-chi.vercel.app',
+  methods: 'GET,POST,PUT,DELETE',
+}));
 
 dotenv.config();
 
