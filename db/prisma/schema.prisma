@@ -11,6 +11,8 @@ datasource db {
 model Task {
   id        String   @id @default(cuid())
   name      String
+  description String?
+  label     String[]
   isDone    Boolean  @default(false)
   isDeleted Boolean  @default(false)
   createdAt DateTime @default(now())
