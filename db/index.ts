@@ -27,6 +27,8 @@ const corsOptions = {
   credentials: true,
 };
 
+app.options('*', cors());
+
 app.use(cors(corsOptions));
 
 dotenv.config();
