@@ -4,19 +4,16 @@ interface ApiResponse<T> {
   message: string;
   data: T;
 }
-
+const baseURL = process.env.NEXT_PUBLIC_API_URL + "api/";
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL,
   headers: {
-    'Content-Type': 'application/json',
-  }
+    "Content-Type": "application/json",
+  },
+  withCredentials: true,
 });
 
-const fetchTasks = async (
-  url: string,
-  options?: AxiosRequestConfig
-): Promise<taskI[] | undefined> => {
-  console.log("from axios", options?.data);
+const fetchTasks = async (url: string): Promise<taskI[] | undefined> => {
   try {
     const response: AxiosResponse<ApiResponse<taskI[]>> = await api.get(url);
     const res = response.data.data;
@@ -24,6 +21,7 @@ const fetchTasks = async (
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       console.error("Axios error:", error.response?.data);
+      throw error;
     } else {
       console.error("Unknown error:", error);
     }
@@ -45,6 +43,7 @@ const createTask = async (
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       console.error("Axios error:", error.response?.data);
+      throw error;
     } else {
       console.error("Unknown error:", error);
     }
@@ -53,11 +52,8 @@ const createTask = async (
 
 const updateTask = async (
   url: string,
-  body: taskUpdateI,
-  options: AxiosRequestConfig = {}
+  body: taskUpdateI
 ): Promise<taskUpdateI | undefined> => {
-  console.log("from axios", options?.data);
-
   try {
     const response: AxiosResponse<ApiResponse<taskUpdateI>> = await api.put(
       url,
@@ -67,6 +63,7 @@ const updateTask = async (
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       console.error("Axios error:", error.response?.data);
+      throw error;
     } else {
       console.error("Unknown error:", error);
     }
@@ -79,6 +76,7 @@ const clearTasks = async (url: string): Promise<void> => {
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       console.error("Axios error:", error.response?.data);
+      throw error;
     } else {
       console.error("Unknown error:", error);
     }
