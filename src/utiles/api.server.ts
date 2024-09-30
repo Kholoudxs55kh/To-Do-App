@@ -4,7 +4,10 @@ interface ApiResponse<T> {
   message: string;
   data: T;
 }
-const baseURL = process.env.NEXT_PUBLIC_API_URL + "api/";
+const baseURL =
+  process.env.NODE_ENV === "production"
+    ? ""
+    : process.env.NEXT_PUBLIC_API_URL + "api/";
 const api = axios.create({
   baseURL,
   headers: {
