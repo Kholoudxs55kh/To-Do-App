@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { startOfDay } from "date-fns";
 import taskUpdateI from "../types.d";
-// import { addWeeks } from "date-fns";
-import { addMinutes } from "date-fns";
+import { addWeeks } from "date-fns";
+// import { addMinutes } from "date-fns";
 import { isCuid } from "cuid";
 
 const prisma = new PrismaClient();
@@ -13,9 +13,17 @@ export default class TaskDao {
     const task = await prisma.task.findFirst({
       where: {
         name: data,
-        createdAt: {
+        updatedAt: {
           gte: todayMidnight,
         },
+        OR: [
+          {
+            name: data,
+            createdAt: {
+              gte: todayMidnight,
+            },
+          },
+        ],
       },
     });
     if (task) {
@@ -63,10 +71,10 @@ export default class TaskDao {
 
   async updateTask(data: taskUpdateI) {
     try {
-      await this.checkTaskExist(data.id);
       if (data.name) {
-        await this.checkTaskExist(data.name);
+        await this.checkTaskNameAvailability(data.name);
       }
+      await this.checkTaskExist(data.id);
     } catch (e: unknown) {
       if (e instanceof Error) {
         if (e.message === "Task not found") throw new Error(e.message);
@@ -115,8 +123,8 @@ export default class TaskDao {
   }
 
   async hardDeleteAllTasks() {
-    // const period = addWeeks(new Date(), -1);
-    const period = addMinutes(new Date(), -55);
+    const period = addWeeks(new Date(), -1);
+    // const period = addMinutes(new Date(), -55);
     const tasks = await prisma.task.deleteMany({
       where: {
         isDeleted: true,

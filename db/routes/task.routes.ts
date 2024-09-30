@@ -4,13 +4,13 @@ import TaskController from "../controllers/task.controller";
 const router = express.Router();
 
 router
-  .route("/task")
+  .route("/")
   .post(TaskController.createTask)
   .get(TaskController.getTasks)
   .put(TaskController.softDeleteAllActiveTasks);
 
 router
-  .route("/task/:taskId")
+  .route("/:taskId")
   .get(TaskController.getTaskById)
   .put(TaskController.updateTask);
 
