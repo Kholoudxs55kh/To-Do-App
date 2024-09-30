@@ -1,5 +1,5 @@
-import { createTask } from "@/utiles/api.axios";
-import { Modal, Button, TextInput, MultiSelect, Group } from "@mantine/core";
+import { createTask } from "@/utiles/api.server";
+import { Modal, Button, TextInput, MultiSelect, Group, Dialog } from "@mantine/core";
 import { useState } from "react";
 
 const labelOptions = [
@@ -25,6 +25,8 @@ const TaskCreationModal: React.FC<TaskCreationModalProps> = ({
   const [description, setDescription] = useState("");
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleCreateTask = () => {
     if (taskName.trim() === "") {
@@ -35,8 +37,11 @@ const TaskCreationModal: React.FC<TaskCreationModalProps> = ({
     const createNewTask = async (data: taskCreateI) => {
       try {
         await createTask("/task", data);
+        setTaskModalOpen(false);
       } catch (error) {
-        alert(`Failed to create task. ${error}`);
+        setError(true);
+        console.log(error);
+        setErrorMessage((error as { response?: { data?: { error?: string } } })?.response?.data?.error || "An unexpected error occurred.");
       }
     };
 
@@ -49,7 +54,6 @@ const TaskCreationModal: React.FC<TaskCreationModalProps> = ({
     setLoading(true);
     createNewTask(newTask);
     setLoading(false);
-    setTaskModalOpen(false);
   };
 
   return (
@@ -92,6 +96,9 @@ const TaskCreationModal: React.FC<TaskCreationModalProps> = ({
           Cancel
         </Button>
       </Group>
+      <Dialog opened={error} onClose={() => setError(false)} title="Error">
+        {errorMessage}
+      </Dialog>
     </Modal>
   );
 };

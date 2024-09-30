@@ -1,5 +1,13 @@
-import { updateTask } from "@/utiles/api.axios";
-import { Modal, Button, TextInput, Checkbox, MultiSelect, Group } from "@mantine/core";
+import { updateTask } from "@/utiles/api.server";
+import {
+  Modal,
+  Button,
+  TextInput,
+  Checkbox,
+  MultiSelect,
+  Group,
+  Dialog,
+} from "@mantine/core";
 import { useState } from "react";
 
 const labelOptions = [
@@ -27,21 +35,28 @@ const UpdateTaskModal: React.FC<EditTaskModalProps> = ({
   const [description, setDescription] = useState(task.description || "");
   const [selectedLabels, setSelectedLabels] = useState<string[]>(task.label);
   const [isDone, setIsDone] = useState(task.isDone);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSave = async () => {
     const updatedTaskData = {
       id: task.id,
       name: taskName,
-      description: description || "", // Optional description
+      description: description || "",
       label: selectedLabels,
       isDone: isDone,
     };
 
     try {
       await updateTask(`/task/${task.id}`, updatedTaskData);
-      onClose(); // Close the modal after the task is saved
+      onClose();
     } catch (error) {
-      console.error("Error updating task:", error);
+      setError(true);
+      console.log(error);
+      setErrorMessage(
+        (error as { response?: { data?: { error?: string } } })?.response?.data
+          ?.error || "An unexpected error occurred."
+      );
     }
   };
 
@@ -73,15 +88,17 @@ const UpdateTaskModal: React.FC<EditTaskModalProps> = ({
         onChange={setSelectedLabels}
         clearable
       />
-              <Group style={{ marginLeft: "55%" }} mt="md">
-
-      <Button mt="md" onClick={handleSave}>
-        Save
-      </Button>
+      <Group style={{ marginLeft: "55%" }} mt="md">
+        <Button mt="md" onClick={handleSave}>
+          Save
+        </Button>
         <Button mt="md" variant="light" onClick={onClose}>
-            Cancel
-            </Button>
-        </Group>
+          Cancel
+        </Button>
+      </Group>
+      <Dialog opened={error} onClose={() => setError(false)} title="Error">
+        {errorMessage}
+      </Dialog>
     </Modal>
   );
 };
