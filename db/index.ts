@@ -7,39 +7,47 @@ import taskRoutes from "./routes/task.routes";
 import { DeleteTaskIfPassesWeekDeleted } from "./middlewares/CheckTaskDeletion";
 import cron from "node-cron";
 
+dotenv.config();
+
 export const app = express();
 
 const allowedOrigins = [
   "https://to-do-app-five-chi.vercel.app",
   "http://localhost:3000",
+  "http://localhost:3001",
   "https://to-do-3nsa6jood-kholoudxs55khs-projects.vercel.app"
 ];
 
 const corsOptions = {
   origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
+    console.log("Received request from origin:", origin);
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
+      console.log("Origin not allowed:", origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
-  methods: "GET,POST,PUT,DELETE",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
+  optionsSuccessStatus: 204
 };
 
-app.options('*', cors());
-
+// Apply CORS middleware first
 app.use(cors(corsOptions));
 
-dotenv.config();
+// Handle preflight requests
+app.options('*', cors(corsOptions));
+
+app.use(morgan("dev"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(morgan("dev"));
-
 app.use((req, res, next) => {
   console.log('Received headers:', req.headers);
+  console.log('Request method:', req.method);
+  console.log('Request URL:', req.url);
   next();
 });
 
@@ -53,6 +61,7 @@ cron.schedule("0 0 * * *", async () => {
     console.error("Error during scheduled task deletion:", error);
   }
 });
+
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(createError.NotFound());
 });
