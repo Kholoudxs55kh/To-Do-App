@@ -1,5 +1,12 @@
 import { createTask } from "@/utiles/api.server";
-import { Modal, Button, TextInput, MultiSelect, Group, Dialog } from "@mantine/core";
+import {
+  Modal,
+  Button,
+  TextInput,
+  MultiSelect,
+  Group,
+  Dialog,
+} from "@mantine/core";
 import { useState } from "react";
 
 const labelOptions = [
@@ -40,8 +47,12 @@ const TaskCreationModal: React.FC<TaskCreationModalProps> = ({
         setTaskModalOpen(false);
       } catch (error) {
         setError(true);
+        setTimeout(() => setError(false), 5000);
         console.log(error);
-        setErrorMessage((error as { response?: { data?: { error?: string } } })?.response?.data?.error || "An unexpected error occurred.");
+        setErrorMessage(
+          (error as { response?: { data?: { error?: string } } })?.response
+            ?.data?.error || "An unexpected error occurred."
+        );
       }
     };
 
@@ -84,12 +95,8 @@ const TaskCreationModal: React.FC<TaskCreationModalProps> = ({
         clearable
       />
 
-      <Group style={{ marginLeft: "45%", display:"flex"}} mt="md">
-        <Button
-          mt="sm"
-          loading={loading}
-          onClick={handleCreateTask}
-        >
+      <Group style={{ marginLeft: "45%", display: "flex" }} mt="md">
+        <Button mt="sm" loading={loading} onClick={handleCreateTask}>
           Create Task
         </Button>
         <Button mt="sm" variant="light" onClick={() => setTaskModalOpen(false)}>

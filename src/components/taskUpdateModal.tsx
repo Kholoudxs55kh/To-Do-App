@@ -52,6 +52,7 @@ const UpdateTaskModal: React.FC<EditTaskModalProps> = ({
       onClose();
     } catch (error) {
       setError(true);
+      setTimeout(() => setError(false), 5000);
       console.log(error);
       setErrorMessage(
         (error as { response?: { data?: { error?: string } } })?.response?.data
