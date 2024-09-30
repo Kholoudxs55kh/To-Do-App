@@ -95,7 +95,7 @@ const TaskCreationModal: React.FC<TaskCreationModalProps> = ({
         clearable
       />
 
-      <Group style={{ marginLeft: "45%", display: "flex" }} mt="md">
+      <Group className="ml-[45%] max-sm:m-0" mt="md">
         <Button mt="sm" loading={loading} onClick={handleCreateTask}>
           Create Task
         </Button>

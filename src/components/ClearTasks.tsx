@@ -55,12 +55,13 @@ const ClearTasksComponent: React.FC<ClearTasksComponentI> = ({
         variant="outline"
         onClick={openClearModal}
         disabled={tasks.length === 0}
-        style={
-          taskType === "active" ? { marginLeft: "40%" } : { marginLeft: "75%" }
-        }
+        className={`${
+          taskType === "active" ? "ml-[40%]" : "ml-[55%]"
+        } md:text-sm`}
       >
         {taskType === "active" ? "Clear All To-Dos" : "Clear Done To-Dos"}
       </Button>
+
       <Modal opened={clearModalOpen} onClose={closeClearModal} title={title}>
         <Text>
           {confirmText}{" "}
@@ -81,7 +82,7 @@ const ClearTasksComponent: React.FC<ClearTasksComponentI> = ({
             permentally deletion
           </span>
         </Text>
-        <Group style={{ marginLeft: "50%" }} mt="md">
+        <Group className="ml-[40%] max-sm:ml-[10%] mt-4 flex justify-end space-x-4">
           <Button variant="outline" onClick={closeClearModal}>
             Cancel
           </Button>

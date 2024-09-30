@@ -57,37 +57,24 @@ export default function Home() {
   }, [tasks]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        inlineSize: "100vw",
-        blockSize: "100vh",
-      }}
-    >
-      <div
-        style={{
-          inlineSize: "60%",
-          blockSize: "60%",
-          backgroundColor: "white",
-          padding: "20px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        }}
-      >
+    <div className="flex justify-center items-center w-full h-screen">
+      <div className="lg:w-3/5 lg:h-3/5 md:w-4/5 md:h-2/3 sm:w-full sm:mx-2 max-sm:mx-1 sm:h-3/5 max-sm:h-3/5 max-sm:w-full  bg-white p-5 shadow-md">
         <Tabs variant="none" value={value} onChange={setValue}>
-          <Tabs.List ref={setRootRef} className={classes.list}>
+          <Tabs.List
+            ref={setRootRef}
+            className={`flex justify-between mb-4 ${classes.list}`}
+          >
             <Tabs.Tab
               value="active"
               ref={setControlRef("active")}
-              className={classes.tab}
+              className={`font-bold text-lg ${classes.tab}`}
             >
               My To-Dos
             </Tabs.Tab>
             <Tabs.Tab
               value="done"
               ref={setControlRef("done")}
-              className={classes.tab}
+              className={`font-bold text-lg ${classes.tab}`}
             >
               Done To-Dos
             </Tabs.Tab>
@@ -97,15 +84,12 @@ export default function Home() {
               position="top"
               withArrow
               closeDelay={1000}
-              style={{
-                backgroundColor: "lightgoldenrodyellow",
-                color: "black",
-              }}
+              className="bg-yellow-100 text-black"
             >
               <Tabs.Tab
                 value="deleted"
                 ref={setControlRef("deleted")}
-                className={classes.tab}
+                className={`font-bold text-lg ${classes.tab}`}
               >
                 Deleted To-Dos
               </Tabs.Tab>
@@ -207,8 +191,8 @@ export default function Home() {
             borderRadius: "50%",
             position: "fixed",
             insetInlineStart: "20px",
-            bottom: "20px",
-            insetBlockEnd: "16px",
+            bottom: "40px",
+            insetBlockEnd: "40px",
           }}
           onClick={() => setTaskModalOpen(true)}
         >

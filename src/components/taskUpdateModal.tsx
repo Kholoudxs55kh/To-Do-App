@@ -63,11 +63,6 @@ const UpdateTaskModal: React.FC<EditTaskModalProps> = ({
 
   return (
     <Modal opened={isOpen} onClose={onClose} title="Edit Task">
-      <Checkbox
-        label="Mark as Done"
-        checked={isDone}
-        onChange={(e) => setIsDone(e.currentTarget.checked)}
-      />
       <TextInput
         label="Task Name"
         placeholder="Enter task name"
@@ -89,7 +84,13 @@ const UpdateTaskModal: React.FC<EditTaskModalProps> = ({
         onChange={setSelectedLabels}
         clearable
       />
-      <Group style={{ marginLeft: "55%" }} mt="md">
+      <Checkbox
+        label="Mark as Done"
+        className="mt-4"
+        checked={isDone}
+        onChange={(e) => setIsDone(e.currentTarget.checked)}
+      />
+      <Group  className="ml-[55%] max-sm:m-0" mt="md">
         <Button mt="md" onClick={handleSave}>
           Save
         </Button>

@@ -44,3 +44,32 @@ body {
   }
 }
 
+@media (max-width: 480px) {
+  .mantine-Table {
+    font-size: 12px;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  th {
+    font-size: 12px;
+  }
+
+  td {
+    font-size: 12px;
+  }
+
+  .mantine-ActionIcon {
+    margin-left: 0;
+  }
+
+  .mantine-Badge {
+    font-size: 8px;
+  }
+
+  .text-balance {
+    font-size: 14px;
+  }
+}

@@ -23,7 +23,7 @@ const DeleteTaskModal: React.FC<DeleteTaskModalProps> = ({
   };
 
   return (
-    <Modal opened={isOpen} onClose={onClose} title="Delete Task" centered>
+    <Modal opened={isOpen} onClose={onClose} centered>
       <Text>
         Are you sure you want to delete this task? <br />{" "}
         <span
@@ -39,7 +39,7 @@ const DeleteTaskModal: React.FC<DeleteTaskModalProps> = ({
           Tasks will be in Deleted tab for 7days before permentally deletion
         </span>
       </Text>
-      <Group style={{ marginLeft: "50%" }} mt="md">
+      <Group className="ml-[40%] max-sm:ml-[10%] mt-4 flex justify-end space-x-4">
       <Button color="red"  mt="sm" onClick={handleDelete}>
         Confirm
       </Button>
