@@ -1,4 +1,4 @@
-import { updateTask } from "@/utiles/api.axios";
+import { updateTask } from "@/utiles/api.server";
 import { Modal, Button, Text, Group } from "@mantine/core";
 import { IconLabelImportant } from "@tabler/icons-react";
 

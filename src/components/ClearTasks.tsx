@@ -1,7 +1,7 @@
 import { Button, Modal, Text, Group } from "@mantine/core";
 import { useState, Dispatch, SetStateAction } from "react";
-import Filteration from "@/components/Filteration"; // Assuming your filter component
-import { clearTasks } from "@/utiles/api.axios";
+import Filteration from "@/components/Filteration";
+import { clearTasks } from "@/utiles/api.server";
 import { IconLabelImportant } from "@tabler/icons-react";
 
 interface ClearTasksComponentI {

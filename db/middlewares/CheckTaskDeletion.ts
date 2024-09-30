@@ -1,5 +1,4 @@
 import TaskDao from "../task.dao";
-import cron from "node-cron";
 
 export async function DeleteTaskIfPassesWeekDeleted() {
   const taskDao = new TaskDao();

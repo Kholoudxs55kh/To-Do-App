@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Table } from "@mantine/core";
-import { updateTask } from "@/utiles/api.axios";
+import { updateTask } from "@/utiles/api.server";
 import UpdateTaskModal from "@/components/taskUpdateModal";
 import DeleteTaskModal from "@/components/taskDeletionModal";
 import TaskRow from "./TaskRowComponent";

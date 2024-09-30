@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { FloatingIndicator, Tabs, ActionIcon, Tooltip } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import classes from "./tab.module.css";
-import { fetchTasks } from "@/utiles/api.axios";
+import { fetchTasks } from "@/utiles/api.server";
 import Tasks from "@/components/Tasks";
 import TempViewIfNoDeletedOrDoneTasks from "@/components/TempViewIfNoDoneOrDeleted";
 import ViewIfNoTasks from "@/components/ViewIfNoTasks";
@@ -40,7 +40,7 @@ export default function Home() {
     "Deleted tasks will be permanently deleted after 7 days.";
 
   useEffect(() => {
-    fetchTasks("/task").then((data) => {
+    fetchTasks("task").then((data) => {
       if (data) {
         setTasks(data);
       }
@@ -62,14 +62,14 @@ export default function Home() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: "100vw",
-        height: "100vh",
+        inlineSize: "100vw",
+        blockSize: "100vh",
       }}
     >
       <div
         style={{
-          width: "60%",
-          height: "60%",
+          inlineSize: "60%",
+          blockSize: "60%",
           backgroundColor: "white",
           padding: "20px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
@@ -206,9 +206,9 @@ export default function Home() {
           style={{
             borderRadius: "50%",
             position: "fixed",
-            left: "20px",
+            insetInlineStart: "20px",
             bottom: "20px",
-            marginBottom: "16px",
+            insetBlockEnd: "16px",
           }}
           onClick={() => setTaskModalOpen(true)}
         >
