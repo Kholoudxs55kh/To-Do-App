@@ -63,7 +63,7 @@ const updateTask = async (url: string, body: taskUpdateI): Promise<taskUpdateI |
 
 const clearTasks = async (url: string): Promise<void> => {
   try {
-    await api.put( url)
+    await api.put(url)
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       console.error('Axios error:', error.response?.data)
