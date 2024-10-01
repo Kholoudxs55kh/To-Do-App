@@ -14,6 +14,10 @@ A simple web application that allows you to manage your tasks. You can easily cr
 - **Clear All Active Tasks:** Remove all tasks that are not yet completed.
 - **Clear All Completed Tasks:** Remove all tasks that have been marked as done.
 
+### Video
+
+- <https://www.loom.com/share/76d71ff352be4955883ea0c9f2bc11ca?sid=1fbd3695-a84c-40c4-9f25-a1dddd1ab4e4>
+
 ## How to Set Up Locally
 
 ### Option 1: Cloning the Repository
@@ -98,7 +102,7 @@ For local development, you will need to set up a local PostgreSQL database and u
 
 ### Running the App Locally
 
-#### Using **Yarn**:
+#### Using **Yarn**
 
 1. Start the backend server:
 
@@ -112,7 +116,7 @@ For local development, you will need to set up a local PostgreSQL database and u
    yarn start-front
    ```
 
-#### Using **npm**:
+#### Using **npm**
 
 1. Start the backend server:
 
