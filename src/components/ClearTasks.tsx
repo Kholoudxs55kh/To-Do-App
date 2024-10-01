@@ -32,7 +32,7 @@ const ClearTasksComponent: React.FC<ClearTasksComponentI> = ({
   }
 
   const clearAllTasks = () => {
-    const endpoint = taskType === 'active' ? '/task' : '/done'
+    const endpoint = taskType === 'active' ? '/task' : 'task/delete/done'
     clearTasks(endpoint).then(() => {
       closeClearModal()
     })

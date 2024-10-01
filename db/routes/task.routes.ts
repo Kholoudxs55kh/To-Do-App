@@ -11,6 +11,6 @@ router
 
 router.route('/:taskId').get(TaskController.getTaskById).put(TaskController.updateTask)
 
-router.route('/done').put(TaskController.softDeleteAllDoneTasks)
+router.route('/delete/done').put(TaskController.softDeleteAllDoneTasks)
 
 export default router
