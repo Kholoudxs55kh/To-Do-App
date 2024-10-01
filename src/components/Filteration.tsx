@@ -1,15 +1,15 @@
-import { Menu, ActionIcon, Checkbox, MultiSelect } from "@mantine/core";
-import { IconFilter } from "@tabler/icons-react";
+import { Menu, ActionIcon, Checkbox, MultiSelect } from '@mantine/core'
+import { IconFilter } from '@tabler/icons-react'
 
 const labelOptions = [
-  { value: "work", label: "Work" },
-  { value: "personal", label: "Personal" },
-  { value: "study", label: "Study" },
-  { value: "entertainment", label: "Entertainment" },
-  { value: "family", label: "Family" },
-  { value: "shopping", label: "Shopping" },
-  { value: "others", label: "Others" },
-];
+  { value: 'work', label: 'Work' },
+  { value: 'personal', label: 'Personal' },
+  { value: 'study', label: 'Study' },
+  { value: 'entertainment', label: 'Entertainment' },
+  { value: 'family', label: 'Family' },
+  { value: 'shopping', label: 'Shopping' },
+  { value: 'others', label: 'Others' },
+]
 
 export default function Filteration({
   tasks,
@@ -17,14 +17,14 @@ export default function Filteration({
   setSelectedTimeFrame,
   selectedLabels,
   setSelectedLabels,
-  margin = "10px",
+  margin = '10px',
 }: {
-  tasks: taskI[];
-  selectedTimeFrame: string[];
-  setSelectedTimeFrame: React.Dispatch<React.SetStateAction<string[]>>;
-  selectedLabels: string[];
-  setSelectedLabels: React.Dispatch<React.SetStateAction<string[]>>;
-    margin?: string;
+  tasks: taskI[]
+  selectedTimeFrame: string[]
+  setSelectedTimeFrame: React.Dispatch<React.SetStateAction<string[]>>
+  selectedLabels: string[]
+  setSelectedLabels: React.Dispatch<React.SetStateAction<string[]>>
+  margin?: string
 }) {
   return (
     <Menu
@@ -38,7 +38,7 @@ export default function Filteration({
           variant="filled"
           color="blue"
           size="lg"
-          style={{ marginLeft: margin  }}
+          style={{ marginLeft: margin }}
         >
           <IconFilter size={20} />
         </ActionIcon>
@@ -51,25 +51,40 @@ export default function Filteration({
             value={selectedTimeFrame.length > 0 ? selectedTimeFrame : undefined}
             onChange={setSelectedTimeFrame}
           >
-            <Checkbox value="today" label="Today" />
-            <Checkbox value="yesterday" label="Yesterday" />
-            <Checkbox value="thisWeek" label="This Week" />
-            <Checkbox value="olderWeek" label="Older than a Week" />
-            <Checkbox value="olderMonth" label="Older than a Month" />
+            <Checkbox
+              value="today"
+              label="Today"
+            />
+            <Checkbox
+              value="yesterday"
+              label="Yesterday"
+            />
+            <Checkbox
+              value="thisWeek"
+              label="This Week"
+            />
+            <Checkbox
+              value="olderWeek"
+              label="Older than a Week"
+            />
+            <Checkbox
+              value="olderMonth"
+              label="Older than a Month"
+            />
           </Checkbox.Group>
-          <Menu.Label style={{ width: "75%" }}>Filter by Labels</Menu.Label>
-          <Menu.Item style={{ width: "75%", backgroundColor: "transparent" }}>
+          <Menu.Label style={{ width: '75%' }}>Filter by Labels</Menu.Label>
+          <Menu.Item style={{ width: '75%', backgroundColor: 'transparent' }}>
             <MultiSelect
               data={labelOptions}
               placeholder="Select labels"
               value={selectedLabels}
               onChange={setSelectedLabels}
-              style={{ width: "65%" }}
+              style={{ width: '65%' }}
               disabled={tasks.length === 0}
             />
           </Menu.Item>
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>
-  );
+  )
 }

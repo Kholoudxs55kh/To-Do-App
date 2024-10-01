@@ -1,16 +1,16 @@
-import { Button, Modal, Text, Group } from "@mantine/core";
-import { useState, Dispatch, SetStateAction } from "react";
-import Filteration from "@/components/Filteration";
-import { clearTasks } from "@/utiles/api.server";
-import { IconLabelImportant } from "@tabler/icons-react";
+import { Button, Modal, Text, Group } from '@mantine/core'
+import { useState, Dispatch, SetStateAction } from 'react'
+import Filteration from '@/components/Filteration'
+import { clearTasks } from '@/pages/api/api.server'
+import { IconLabelImportant } from '@tabler/icons-react'
 
 interface ClearTasksComponentI {
-  taskType: "active" | "done";
-  tasks: taskI[];
-  selectedTimeFrame: string[];
-  setSelectedTimeFrame: Dispatch<SetStateAction<string[]>>;
-  selectedLabels: string[];
-  setSelectedLabels: Dispatch<SetStateAction<string[]>>;
+  taskType: 'active' | 'done'
+  tasks: taskI[]
+  selectedTimeFrame: string[]
+  setSelectedTimeFrame: Dispatch<SetStateAction<string[]>>
+  selectedLabels: string[]
+  setSelectedLabels: Dispatch<SetStateAction<string[]>>
 }
 
 const ClearTasksComponent: React.FC<ClearTasksComponentI> = ({
@@ -21,72 +21,77 @@ const ClearTasksComponent: React.FC<ClearTasksComponentI> = ({
   selectedLabels,
   setSelectedLabels,
 }) => {
-  const [clearModalOpen, setClearModalOpen] = useState(false);
+  const [clearModalOpen, setClearModalOpen] = useState(false)
 
   const openClearModal = () => {
-    setClearModalOpen(true);
-  };
+    setClearModalOpen(true)
+  }
 
   const closeClearModal = () => {
-    setClearModalOpen(false);
-  };
+    setClearModalOpen(false)
+  }
 
   const clearAllTasks = () => {
-    const endpoint = taskType === "active" ? "/task" : "/done";
+    const endpoint = taskType === 'active' ? '/task' : '/done'
     clearTasks(endpoint).then(() => {
-      closeClearModal();
-    });
-  };
+      closeClearModal()
+    })
+  }
 
   const title =
-    taskType === "active"
-      ? "Confirm Clear All Active To-Dos"
-      : "Confirm Clear Done To-Dos";
+    taskType === 'active' ? 'Confirm Clear All Active To-Dos' : 'Confirm Clear Done To-Dos'
 
   const confirmText =
-    taskType === "active"
-      ? "Are you sure you want to clear all active to-dos?"
-      : "Are you sure you want to clear all done to-dos?";
+    taskType === 'active'
+      ? 'Are you sure you want to clear all active to-dos?'
+      : 'Are you sure you want to clear all done to-dos?'
 
   return (
-    <div style={{ display: "flex", justifyContent: "flex-end" }}>
+    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
       <Button
         color="red"
         variant="outline"
         onClick={openClearModal}
         disabled={tasks.length === 0}
-        className={`${
-          taskType === "active" ? "ml-[40%]" : "ml-[55%]"
-        } md:text-sm`}
+        className={`${taskType === 'active' ? 'ml-[40%]' : 'ml-[55%]'} md:text-sm`}
       >
-        {taskType === "active" ? "Clear All To-Dos" : "Clear Done To-Dos"}
+        {taskType === 'active' ? 'Clear All To-Dos' : 'Clear Done To-Dos'}
       </Button>
 
-      <Modal opened={clearModalOpen} onClose={closeClearModal} title={title}>
+      <Modal
+        opened={clearModalOpen}
+        onClose={closeClearModal}
+        title={title}
+      >
         <Text>
-          {confirmText}{" "}
+          {confirmText}{' '}
           <span
             style={{
-              fontSize: "12px",
-              color: "red",
-              display: "flex",
-              marginTop: "10px",
+              fontSize: '12px',
+              color: 'red',
+              display: 'flex',
+              marginTop: '10px',
             }}
           >
-            {" "}
+            {' '}
             <IconLabelImportant
               size={16}
-              style={{ marginRight: "5px", marginTop: "2px" }}
-            />{" "}
-            All Deleted Tasks will be in Deleted tab for 7days before
-            permentally deletion
+              style={{ marginRight: '5px', marginTop: '2px' }}
+            />{' '}
+            All Deleted Tasks will be in Deleted tab for 7days before permentally deletion
           </span>
         </Text>
-        <Group className="ml-[40%] max-sm:ml-[10%] mt-4 flex justify-end space-x-4">
-          <Button variant="outline" onClick={closeClearModal}>
+        <Group className="ml-[40%] mt-4 flex justify-end space-x-4 max-sm:ml-[10%]">
+          <Button
+            variant="outline"
+            onClick={closeClearModal}
+          >
             Cancel
           </Button>
-          <Button color="red" onClick={clearAllTasks}>
+          <Button
+            color="red"
+            onClick={clearAllTasks}
+          >
             Confirm
           </Button>
         </Group>
@@ -100,7 +105,7 @@ const ClearTasksComponent: React.FC<ClearTasksComponentI> = ({
         setSelectedLabels={setSelectedLabels}
       />
     </div>
-  );
-};
+  )
+}
 
-export default ClearTasksComponent;
+export default ClearTasksComponent

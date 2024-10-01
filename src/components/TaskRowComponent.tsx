@@ -1,22 +1,15 @@
-import React from "react";
-import {
-  Table,
-  Checkbox,
-  Menu,
-  ActionIcon,
-  Button,
-  Badge,
-} from "@mantine/core";
-import { IconDots, IconEdit, IconTrash } from "@tabler/icons-react";
-import { format, isToday, isYesterday } from "date-fns";
+import React from 'react'
+import { Table, Checkbox, Menu, ActionIcon, Button, Badge } from '@mantine/core'
+import { IconDots, IconEdit, IconTrash } from '@tabler/icons-react'
+import { format, isToday, isYesterday } from 'date-fns'
 
 interface TaskRowProps {
-  task: taskI;
-  deleted: boolean;
-  openEditModal: (task: taskI) => void;
-  openDeleteModal: (task: taskI) => void;
-  toggleIsDone: (id: string) => void;
-  toggleRestoreTask: (id: string) => void;
+  task: taskI
+  deleted: boolean
+  openEditModal: (task: taskI) => void
+  openDeleteModal: (task: taskI) => void
+  toggleIsDone: (id: string) => void
+  toggleRestoreTask: (id: string) => void
 }
 
 const TaskRow: React.FC<TaskRowProps> = ({
@@ -28,22 +21,22 @@ const TaskRow: React.FC<TaskRowProps> = ({
   toggleRestoreTask,
 }) => {
   const labelColors: { [key: string]: string } = {
-    work: "teal",
-    personal: "green",
-    study: "lime",
-    entertainment: "purple",
-    family: "cyan",
-    shopping: "grape",
-    others: "gray",
-  };
+    work: 'teal',
+    personal: 'green',
+    study: 'lime',
+    entertainment: 'purple',
+    family: 'cyan',
+    shopping: 'grape',
+    others: 'gray',
+  }
 
-  const getChipColor = (label: string) => labelColors[label] || "gray";
+  const getChipColor = (label: string) => labelColors[label] || 'gray'
 
   const formatDate = (date: Date) => {
-    if (isToday(date)) return "Today";
-    if (isYesterday(date)) return "Yesterday";
-    return format(date, "EEEE, dd MMM, yyyy");
-  };
+    if (isToday(date)) return 'Today'
+    if (isYesterday(date)) return 'Yesterday'
+    return format(date, 'EEEE, dd MMM, yyyy')
+  }
 
   return (
     <Table.Tr>
@@ -56,8 +49,12 @@ const TaskRow: React.FC<TaskRowProps> = ({
       <Table.Td>{task.name}</Table.Td>
       <Table.Td>{task.description}</Table.Td>
       <Table.Td>
-        {task.label.map((l) => (
-          <Badge key={l} color={getChipColor(l)} variant="filled">
+        {task.label.map(l => (
+          <Badge
+            key={l}
+            color={getChipColor(l)}
+            variant="filled"
+          >
             {l}
           </Badge>
         ))}
@@ -69,10 +66,8 @@ const TaskRow: React.FC<TaskRowProps> = ({
         ) : (
           <Menu withArrow>
             <Menu.Target>
-              <ActionIcon
-                style={{ backgroundColor: "lightGray", marginLeft: "20%" }}
-              >
-                <IconDots style={{ backgroundColor: "transparent" }} />
+              <ActionIcon style={{ backgroundColor: 'lightGray', marginLeft: '20%' }}>
+                <IconDots style={{ backgroundColor: 'transparent' }} />
               </ActionIcon>
             </Menu.Target>
             <Menu.Dropdown>
@@ -96,7 +91,7 @@ const TaskRow: React.FC<TaskRowProps> = ({
         )}
       </Table.Td>
     </Table.Tr>
-  );
-};
+  )
+}
 
-export default TaskRow;
+export default TaskRow
